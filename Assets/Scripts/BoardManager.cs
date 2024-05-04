@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -34,31 +34,30 @@ public class BoardManager : NetworkBehaviour
     [SerializeField] private Sprite xSprite, oSprite;
     private void OnClickCell(int r, int c)
     {
-        // If button clicked by host, then change button sprite as X
+        // X đầu
 
         if (NetworkManager.Singleton.IsHost && GameManager.Instance.currentTurn.Value == 0)
         {
             buttons[r, c].GetComponent<Image>().sprite = xSprite;
             buttons[r, c].interactable = false;
-            // Also change on Client side
+            
             ChangeSpriteClientRpc(r, c);
             CheckResult(r, c);
             GameManager.Instance.currentTurn.Value = 1;
         }
 
-        // If button is clicked by client, then change button sprite as O
+        // Bấm sau thành O
 
         else if (!NetworkManager.Singleton.IsHost && GameManager.Instance.currentTurn.Value == 1)
         {
             buttons[r, c].GetComponent<Image>().sprite = oSprite;
             buttons[r, c].interactable = false;
             CheckResult(r, c);
-            // Also change on host side
+            
             ChangeSpriteServerRpc(r, c);
         }
 
-        // Make the button non interactable after clicked once
-
+        
 
     }
 

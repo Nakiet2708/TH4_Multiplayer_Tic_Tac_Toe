@@ -64,7 +64,7 @@ public class GameManager : NetworkBehaviour
         {
             msgText.text = "You Won";
             gameEndPanel.SetActive(true);
-            // Show Panel with text that Opponent Won
+            
             ShowOpponentMsg("You Lose");
         }
         else if (msg.Equals("draw"))
@@ -80,12 +80,12 @@ public class GameManager : NetworkBehaviour
     {
         if (IsHost)
         {
-            // Then use ClientRpc to show Message at Client Side
+            
             OpponentMsgClientRpc(msg);
         }
         else
         {
-            // Use ServerRpc to show message at Server Side
+            
             OpponentMsgServerRpc(msg);
         }
     }
@@ -110,8 +110,7 @@ public class GameManager : NetworkBehaviour
 
     public void Restart()
     {
-        // If this is client, then call SererRpc to destroy current board and create new board
-        // If this is client then Client will also call ServerRpc to hide result panel on host side
+        
 
         if (!IsHost)
         {
@@ -125,9 +124,7 @@ public class GameManager : NetworkBehaviour
             RestartClientRpc();
         }
 
-        // Destroy the current Game Board
-        // Spawn a new board
-        // Hide the Result Panel
+        
     }
 
     [ServerRpc(RequireOwnership = false)]
